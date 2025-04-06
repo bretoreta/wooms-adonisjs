@@ -11,6 +11,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/pages/components/ui/tabs'
 import CategoriesTable from './Partials/CategoriesTable.vue';
 import SyncManager from './Partials/SyncManager.vue';
+import { toast } from 'vue-sonner';
 
 const props = defineProps({
     categories: Object,
@@ -49,7 +50,8 @@ const deleteCategory = () => {
             isDeletingCategory.value = false;
         },
         onSuccess: () => {
-            showDeleteModal.value = false
+            showDeleteModal.value = false,
+            toast.success("Category has been deleted successfully")
         }
     });
 }
@@ -57,7 +59,7 @@ const deleteCategory = () => {
 <template>
     <AppLayout title="Categories" :breadcrumbs="breadcrumbs">
         <div>
-            <div class="grid flex-1 items-start gap-4 md:gap-8">
+            <div class="gap-4 md:gap-8">
                 <Tabs default-value="all">
                     <div class="flex items-center">
                         <TabsList>
@@ -111,21 +113,21 @@ const deleteCategory = () => {
                         </div>
                     </div>
                     <TabsContent value="all">
-                        <CategoriesTable :categories="categories" v-if="categories.length" @delete-category="(id) => confirmDeleteCategory(id)" />
-                        <div v-if="!categories.length && !activeSync" class="w-full bg-white dark:bg-muted/40 rounded-md mt-4">
+                        <CategoriesTable :categories="categories.data" v-if="categories.data.length" @delete-category="(id) => confirmDeleteCategory(id)" />
+                        <div v-if="!categories.data.length && !activeSync" class="w-full bg-white dark:bg-muted/40 rounded-md mt-4">
                             <EmptyState title="No Categories Added" subtitle="Your application has no categories yet">
                                 <template #action>
                                     <Button @click="router.visit(route('admin.categories.pull'))">Pull Categories</Button>
                                 </template>
                             </EmptyState>
                         </div>
-                        <div v-if="!categories.length && activeSync" class="w-full bg-white dark:bg-muted/40 rounded-md mt-4">
+                        <div v-if="!categories.data.length && activeSync" class="w-full bg-white dark:bg-muted/40 rounded-md mt-4">
                             <EmptyState title="Sync Running" subtitle="There is an active sync that is currently running in the background. You'll be notified when its done" />
                         </div>
                     </TabsContent>
                     <TabsContent value="sync">
                         <SyncManager :activeSync="activeSync" :syncable="true" />
-                        <div v-if="!categories.length && activeSync" class="w-full bg-white dark:bg-muted/40 rounded-md mt-4">
+                        <div v-if="!categories.data.length && activeSync" class="w-full bg-white dark:bg-muted/40 rounded-md mt-4">
                             <EmptyState title="Sync Running" subtitle="There is an active sync that is currently running in the background. You'll be notified when its done" />
                         </div>
                     </TabsContent>
@@ -144,7 +146,7 @@ const deleteCategory = () => {
                     <Button variant="destructive" @click="deleteCategory" :class="{ 'opacity-75': isDeletingCategory }" :disabled="isDeletingCategory" :loading="isDeletingCategory">
                         Delete Category
                     </Button>
-                    <Button variant="outline" @click="showDeleteModal = false">Cancel</Button>
+                    <Button variant="outline" @click="showDeleteModal = false">Nevermind</Button>
                 </div>
             </template>
         </ConfirmationModal>

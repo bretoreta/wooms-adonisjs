@@ -8,38 +8,35 @@ export default class CategoriesController {
     return inertia.render('categories/Index', { categories })
   }
 
-  async store({ request }: HttpContext) {
+  create({ inertia }: HttpContext) {
+    return inertia.render('categories/Create')
+  }
+
+  async store({ request, response }: HttpContext) {
     const payload = await request.validateUsing(createPostValidator)
-    const category = await Category.create(payload)
+    await Category.create(payload)
 
-    return category
+    return response.redirect().toRoute('categories.index')
   }
 
-  async show({ params, response }: HttpContext) {
-    const category = await Category.find(params.id)
+  async show({ params, inertia }: HttpContext) {
+    const category = await Category.findOrFail(params.id)
 
-    if (!category) {
-      return response.status(404).send({
-        message: 'Category not found. Provided id ' + params.id + ' does not exist',
-      })
-    }
-
-    return category
+    return inertia.render('categories/Edit', { category })
   }
 
-  async update({ request, params }: HttpContext) {
+  async update({ request, params, response }: HttpContext) {
     const payload = await request.validateUsing(updatePostValidator)
 
     await Category.query().update(payload).where('id', params.id)
-    const newCategory = await Category.find(params.id)
 
-    return newCategory
+    return response.redirect().toRoute('categories.index')
   }
 
   async delete({ params, response }: HttpContext) {
     const category = await Category.find(params.id)
     await category?.delete()
 
-    return response.status(204)
+    return response.redirect().toRoute('categories.index')
   }
 }

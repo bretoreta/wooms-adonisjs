@@ -18,7 +18,7 @@ const progress = ref(0);
 
 const fetchBatchProgress = () => {
     const interval = setInterval(() => {
-        axios.get(route('admin.batches.progress')).then((res) => {
+        axios.get('/sync/porgress').then((res) => {
             progress.value = res.data;
             if(progress.value == 100) {
                 clearInterval(interval);
@@ -42,7 +42,7 @@ onUnmounted(() => {
 })
 
 const runSync = () => {
-    router.post(route('admin.categories.sync.dispatch'));
+    router.post('/categories/sync/dispatch');
 }
 </script>
 

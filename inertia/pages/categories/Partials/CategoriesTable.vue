@@ -36,7 +36,7 @@ const emit = defineEmits([
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <CategoryRow  v-for="category in categories" :key="category.id" :category="category" :level="0" @delete-category="(val) => emit('deleteCategory', val)" />
+                    <CategoryRow v-for="category in categories" :key="category.id" :category="category" :level="0" @delete-category="(val) => emit('deleteCategory', val)" />
                 </TableBody>
             </Table>
         </CardContent>

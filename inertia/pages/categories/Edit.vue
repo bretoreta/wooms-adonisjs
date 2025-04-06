@@ -7,22 +7,22 @@ import { Button } from '~/pages/components/ui/button';
 import { Label } from '~/pages/components/ui/label';
 import { Input } from '~/pages/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/pages/components/ui/card'
-import CategoriesSearcher from './Partials/CategoriesSearcher.vue';
+// import CategoriesSearcher from './Partials/CategoriesSearcher.vue';
 
 const props = defineProps(['category']);
 
 const breadcrumbs = [
     {
         title: 'Dashboard',
-        href: route('admin.dashboard'),
+        href: '/',
     },
     {
         title: 'Categories',
-        href: route('admin.categories.index'),
+        href: '/categories',
     },
     {
         title: 'Edit Category',
-        href: route('admin.categories.edit', props.category.id),
+        href: `/categories/${props.category.id}`,
     },
 ];
 
@@ -34,7 +34,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.put(route('admin.categories.update', form.id));
+    form.put(`/categories/${props.category.id}/update`);
 }
 
 </script>
@@ -47,7 +47,7 @@ const submit = () => {
                     <Button as-child variant="outline" size="xs" :disabled="form.processing">
                         <Link 
                             class="size-8"
-                            :href="route('admin.categories.index')">
+                            href="/categories">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                             </svg>
@@ -60,7 +60,7 @@ const submit = () => {
                     <div class="hidden items-center gap-2 md:ml-auto md:flex">
                         <Button as-child variant="outline" size="sm" :disabled="form.processing">
                             <Link 
-                                :href="route('admin.categories.index')">
+                                href="/categories">
                                 Discard
                             </Link>
                         </Button>
@@ -85,10 +85,10 @@ const submit = () => {
                                         <Input id="name" type="text" class="w-full"
                                             v-model="form.name"/>
                                     </div>
-                                    <div class="grid gap-3">
+                                    <!-- <div class="grid gap-3">
                                         <Label for="parent_category">Parent Category</Label>
                                         <CategoriesSearcher v-model="form.laravel_parent_id" />
-                                    </div>
+                                    </div> -->
                                     <div class="grid gap-3">
                                         <Label for="description">Description</Label>
                                         <div class="border rounded-md p-4">

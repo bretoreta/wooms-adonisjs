@@ -24,7 +24,7 @@ const padding = computed(() => {
 <template>
     <TableRow :key="category.id">
         <TableCell class="font-medium">
-            <Link :href="route('admin.categories.products', category.id)" class="hover:underline">
+            <Link :href="`/categories/${category.id}`" class="hover:underline">
                 <span v-if="level > 0" :class="padding">{{ '- '.repeat(level) }} </span>
                 {{ category.name }}
             </Link>
@@ -36,7 +36,7 @@ const padding = computed(() => {
             {{ category.woo_id }}
         </TableCell>
         <TableCell class="hidden md:table-cell">
-            {{ DateTime.fromISO(category.updated_at).toRelative() }}
+            {{ DateTime.fromISO(category.updatedAt).toRelative() }}
         </TableCell>
         <TableCell>
             <DropdownMenu>
@@ -50,13 +50,13 @@ const padding = computed(() => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem>
-                        <Link :href="route('admin.categories.edit', category.id)" class="w-full">Edit</Link>
+                    <DropdownMenuItem as-child>
+                        <Link :href="`/categories/${category.id}`" class="w-full">Edit</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem @click="emit('deleteCategory', category.id)">Delete</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </TableCell>
     </TableRow>
-    <CategoryRow v-for="child in category.children" :key="child.id" :category="child" :level="level + 1" @delete-category="(val) => emit('deleteCategory', val)" />
+    <!-- <CategoryRow v-for="child in category.children" :key="child.id" :category="child" :level="level + 1" @delete-category="(val) => emit('deleteCategory', val)" /> -->
 </template>

@@ -2,7 +2,7 @@
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '~/pages/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '~/pages/components/ui/popover'
 import { Button } from '~/pages/components/ui/button'
-import { cn } from '~/pages/lib/utils'
+import { cn } from '~/lib/utils'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { toast } from 'vue-sonner'

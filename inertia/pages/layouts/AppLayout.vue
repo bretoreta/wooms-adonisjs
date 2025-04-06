@@ -6,6 +6,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '~/pages/components/ui/sidebar'
+import { Toaster } from '~/pages/components/ui/sonner'
 import { Head } from '@inertiajs/vue3';
 import Breadcrumbs from '~/pages/components/Breadcrumbs.vue';
 
@@ -32,5 +33,6 @@ defineProps<{ title: string, breadcrumbs: Array<Breadcrumbs> }>()
         <slot />
       </div>
     </SidebarInset>
+    <Toaster />
   </SidebarProvider>
 </template>

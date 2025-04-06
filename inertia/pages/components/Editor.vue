@@ -2,11 +2,11 @@
 import { onUnmounted, computed } from 'vue';
 import { Editor, EditorContent } from '@tiptap/vue-3'
 
-import { Button } from '@/components/ui/button';
+import { Button } from '~/pages/components/ui/button';
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import TextStyle from '@tiptap/extension-text-style'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '~/pages/components/ui/popover';
 import Placeholder from '@tiptap/extension-placeholder'
 
 const props = defineProps({
